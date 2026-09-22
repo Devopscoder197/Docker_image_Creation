@@ -1,0 +1,85 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Build Docker Images') {
+            parallel {
+
+                stage('Build App1') {
+                    steps {
+                        sh '''
+                            docker build \
+                                -t app1:latest \
+                                ./app1
+                        '''
+                    }
+                }
+
+                stage('Build App2') {
+                    steps {
+                        sh '''
+                            docker build \
+                                -t app2:latest \
+                                ./app2
+                        '''
+                    }
+                }
+
+                stage('Build App3') {
+                    steps {
+                        sh '''
+                            docker build \
+                                -t app3:latest \
+                                ./app3
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Run Containers') {
+            parallel {
+
+                stage('Run App1') {
+                    steps {
+                        sh '''
+                            docker rm -f app1-container || true
+
+                            docker run -d \
+                                --name app1-container \
+                                -p 8081:80 \
+                                app1:latest
+                        '''
+                    }
+                }
+
+                stage('Run App2') {
+                    steps {
+                        sh '''
+                            docker rm -f app2-container || true
+
+                            docker run -d \
+                                --name app2-container \
+                                -p 8082:80 \
+                                app2:latest
+                        '''
+                    }
+                }
+
+                stage('Run App3') {
+                    steps {
+                        sh '''
+                            docker rm -f app3-container || true
+
+                            docker run -d \
+                                --name app3-container \
+                                -p 8083:80 \
+                                app3:latest
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}
