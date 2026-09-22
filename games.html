@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashok Play Area</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav button {
+            background: transparent;
+            color: white;
+            border: none;
+            margin-left: 15px;
+            cursor: pointer;
+            font-size: 15px;
+            padding: 8px;
+        }
+
+        nav button:hover {
+            color: #ffe600;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 360px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 50px 20px;
+            background:
+                linear-gradient(rgba(31, 20, 70, .75), rgba(20, 40, 100, .75)),
+                linear-gradient(135deg, #ff512f, #dd2476);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: .2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .primary {
+            background: #ffcc00;
+            color: #222;
+        }
+
+        .success {
+            background: #18a558;
+            color: white;
+        }
+
+        .danger {
+            background: #e63946;
+            color: white;
+        }
+
+        .dark {
+            background: #222;
+            color: white;
+        }
+
+        /* WINNER BANNER */
+        .winner-banner {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #fff;
+            text-align: center;
+            padding: 18px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 55px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: #333;
+        }
+
+        .section-title p {
+            color: #777;
+            margin-top: 8px;
+        }
+
+        /* GAME CARDS */
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0,0,0,.08);
+            transition: .3s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0,0,0,.15);
+        }
+
+        .game-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .game-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .game-card p {
+            color: #777;
+            margin-bottom: 18px;
+        }
+
+        /* SCOREBOARD */
+        .scoreboard-container {
+            max-width: 900px;
+            margin: auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 5px 18px rgba(0,0,0,.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #2575fc;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f8ff;
+        }
+
+        .winner {
+            color: #e09f00;
+            font-weight: bold;
+        }
+
+        /* FORMS */
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #2575fc;
+        }
+
+        .form-container .btn {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        /* ADMIN */
+        .admin-table {
+            max-width: 1100px;
+            margin: auto;
+            overflow-x: auto;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #e09f00;
+        }
+
+        .approved {
+            color: #18a558;
+        }
+
+        .rejected {
+            color: #e63946;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .action-buttons button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* LOGIN */
+        #loginPage {
+            display: none;
+            min-height: 75vh;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,.12);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .login-message {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #171717;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav button {
+                margin: 3px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            section {
+                padding: 40px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="logo">🎮 Ashok Play Area</div>
+
+    <nav>
+        <button onclick="showSection('home')">Home</button>
+        <button onclick="showSection('games')">Games</button>
+        <button onclick="showSection('scoreboard')">Scoreboard</button>
+        <button onclick="showSection('register')">Register</button>
+        <button onclick="showLogin()">Login</button>
+        <button onclick="showSection('admin')">Admin</button>
+    </nav>
+</header>
+
+
+<!-- MAIN HOME -->
+<div id="home">
+
+    <!-- HERO -->
+    <section class="hero">
+        <div>
+            <h1>Welcome to Ashok Play Area</h1>
+            <p>Play. Compete. Score. Become the Champion!</p>
+            <button class="btn primary" onclick="showSection('games')">
+                🎮 Play Games
+            </button>
+        </div>
+    </section>
+
+    <!-- WINNER ANNOUNCEMENT -->
+    <div class="winner-banner">
+        🏆 Winner Announcement: Congratulations to Rahul — Chess Champion! 🏆
+    </div>
+
+    <!-- FEATURED GAMES -->
+    <section id="games">
+        <div class="section-title">
+            <h2>🎮 Games</h2>
+            <p>Choose your favorite game and start playing.</p>
+        </div>
+
+        <div class="games">
+
+            <div class="game-card">
+                <div class="game-icon">♟️</div>
+                <h3>Chess</h3>
+                <p>Challenge your opponent with strategy.</p>
+                <button class="btn primary" onclick="playGame('Chess')">
+                    Play Now
+                </button>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">🏏</div>
+                <h3>Cricket</h3>
+                <p>Score runs and become the champion.</p>
+                <button class="btn primary" onclick="playGame('Cricket')">
+                    Play Now
+                </button>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">⚽</div>
+                <h3>Football</h3>
+                <p>Compete and score goals.</p>
+                <button class="btn primary" onclick="playGame('Football')">
+                    Play Now
+                </button>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">🎯</div>
+                <h3>Carrom</h3>
+                <p>Test your accuracy and skill.</p>
+                <button class="btn primary" onclick="playGame('Carrom')">
+                    Play Now
+                </button>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">🎮</div>
+                <h3>Quiz</h3>
+                <p>Test your knowledge and win points.</p>
+                <button class="btn primary" onclick="playGame('Quiz')">
+                    Play Now
+                </button>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">🏎️</div>
+                <h3>Racing</h3>
+                <p>Race against other players.</p>
+                <button class="btn primary" onclick="playGame('Racing')">
+                    Play Now
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- SCOREBOARD -->
+    <section id="scoreboard">
+        <div class="section-title">
+            <h2>🏆 Scoreboard</h2>
+            <p>Current player rankings.</p>
+        </div>
+
+        <div class="scoreboard-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Game</th>
+                        <th>Score</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="scoreTable">
+                    <tr>
+                        <td>1</td>
+                        <td>Rahul</td>
+                        <td>Chess</td>
+                        <td>980</td>
+                        <td class="winner">🏆 Winner</td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Ashok</td>
+                        <td>Quiz</td>
+                        <td>920</td>
+                        <td>Runner Up</td>
+                    </tr>
+
+                    <tr>
+                        <td>3</td>
+                        <td>Vijay</td>
+                        <td>Cricket</td>
+                        <td>875</td>
+                        <td>Playing</td>
+                    </tr>
+
+                    <tr>
+                        <td>4</td>
+                        <td>Arun</td>
+                        <td>Carrom</td>
+                        <td>810</td>
+                        <td>Playing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+    <!-- REGISTRATION -->
+    <section id="register">
+        <div class="section-title">
+            <h2>📝 Player Registration</h2>
+            <p>Register to participate in games.</p>
+        </div>
+
+        <div class="form-container">
+
+            <form id="registrationForm">
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="playerName"
+                           placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="playerEmail"
+                           placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="playerPhone"
+                           placeholder="Enter phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Game</label>
+                    <select id="playerGame" required>
+                        <option value="">Choose Game</option>
+                        <option>Chess</option>
+                        <option>Cricket</option>
+                        <option>Football</option>
+                        <option>Carrom</option>
+                        <option>Quiz</option>
+                        <option>Racing</option>
+                    </select>
+                </div>
+
+                <button class="btn success" type="submit">
+                    Register Player
+                </button>
+
+            </form>
+
+            <p id="registerMessage" class="login-message"></p>
+        </div>
+    </section>
+
+
+    <!-- ADMIN PANEL -->
+    <section id="admin">
+        <div class="section-title">
+            <h2>⚙️ Admin Panel</h2>
+            <p>Approve or reject player registrations.</p>
+        </div>
+
+        <div class="admin-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Email</th>
+                        <th>Game</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="adminTable">
+
+                    <tr id="player1">
+                        <td>Ravi Kumar</td>
+                        <td>ravi@example.com</td>
+                        <td>Chess</td>
+                        <td class="status pending">Pending</td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button class="success"
+                                    onclick="approvePlayer('player1')">
+                                    ✓ Approve
+                                </button>
+
+                                <button class="danger"
+                                    onclick="rejectPlayer('player1')">
+                                    ✕ Reject
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr id="player2">
+                        <td>Priya</td>
+                        <td>priya@example.com</td>
+                        <td>Quiz</td>
+                        <td class="status pending">Pending</td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button class="success"
+                                    onclick="approvePlayer('player2')">
+                                    ✓ Approve
+                                </button>
+
+                                <button class="danger"
+                                    onclick="rejectPlayer('player2')">
+                                    ✕ Reject
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+
+<!-- LOGIN PAGE -->
+<section id="loginPage">
+
+    <div class="login-box">
+
+        <h2>🔐 Player Login</h2>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email"
+                       id="loginEmail"
+                       placeholder="Enter email"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password"
+                       id="loginPassword"
+                       placeholder="Enter password"
+                       required>
+            </div>
+
+            <button class="btn primary" type="submit">
+                Login
+            </button>
+
+        </form>
+
+        <p id="loginMessage" class="login-message"></p>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 Ashok Play Area | Play • Compete • Win 🏆</p>
+</footer>
+
+
+<script>
+
+    /* SHOW SECTIONS */
+    function showSection(sectionId) {
+
+        document.getElementById("home").style.display = "block";
+        document.getElementById("loginPage").style.display = "none";
+
+        const section = document.getElementById(sectionId);
+
+        if (section) {
+            section.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    }
+
+
+    /* SHOW LOGIN */
+    function showLogin() {
+
+        document.getElementById("home").style.display = "none";
+        document.getElementById("loginPage").style.display = "flex";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    /* PLAY GAME */
+    function playGame(gameName) {
+
+        alert(
+            "🎮 Welcome to " +
+            gameName +
+            "!\n\nGame is ready to start."
+        );
+    }
+
+
+    /* REGISTRATION */
+    document.getElementById("registrationForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const name =
+                document.getElementById("playerName").value;
+
+            const game =
+                document.getElementById("playerGame").value;
+
+            document.getElementById("registerMessage")
+                .style.color = "#18a558";
+
+            document.getElementById("registerMessage")
+                .innerText =
+                "✅ Registration successful! " +
+                name +
+                " has registered for " +
+                game +
+                ". Waiting for admin approval.";
+
+            this.reset();
+        });
+
+
+    /* LOGIN */
+    document.getElementById("loginForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("loginEmail").value;
+
+            document.getElementById("loginMessage")
+                .style.color = "#18a558";
+
+            document.getElementById("loginMessage")
+                .innerText =
+                "✅ Login successful! Welcome to Ashok Play Area.";
+
+            console.log("Logged in:", email);
+        });
+
+
+    /* APPROVE PLAYER */
+    function approvePlayer(playerId) {
+
+        const row =
+            document.getElementById(playerId);
+
+        const status =
+            row.querySelector(".status");
+
+        status.innerText = "Approved";
+        status.className = "status approved";
+
+        alert("✅ Player approved successfully!");
+    }
+
+
+    /* REJECT PLAYER */
+    function rejectPlayer(playerId) {
+
+        const row =
+            document.getElementById(playerId);
+
+        const status =
+            row.querySelector(".status");
+
+        status.innerText = "Rejected";
+        status.className = "status rejected";
+
+        alert("❌ Player rejected.");
+    }
+
+</script>
+
+</body>
+</html>
