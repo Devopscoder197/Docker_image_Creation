@@ -1,85 +1,100 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME      = 'movie-booking-app'
+        IMAGE_NAME1     = 'mydoctor-app1'
+
+        CONTAINER_NAME  = 'movie-booking-container'
+        CONTAINER_NAME2 = 'docter-appointment-booking'
+
+        HOST_PORT       = '8081'
+        HOST_PORT1      = '8084'
+
+        CONTAINER_PORT  = '80'
+    }
+
     stages {
 
-        stage('Build Docker Images') {
-            parallel {
-
-                stage('Build App1') {
-                    steps {
-                        sh '''
-                            docker build \
-                                -t app1:latest \
-                                ./app1
-                        '''
-                    }
-                }
-
-                stage('Build App2') {
-                    steps {
-                        sh '''
-                            docker build \
-                                -t app2:latest \
-                                ./app2
-                        '''
-                    }
-                }
-
-                stage('Build App3') {
-                    steps {
-                        sh '''
-                            docker build \
-                                -t app3:latest \
-                                ./app3
-                        '''
-                    }
-                }
+        stage('Clone Repository') {
+            steps {
+                git(
+                    branch: 'main',
+                    url: 'https://github.com/Devopscoder197/Docker_image_Creation.git'
+                )
             }
         }
 
-        stage('Run Containers') {
-            parallel {
-
-                stage('Run App1') {
-                    steps {
-                        sh '''
-                            docker rm -f app1-container || true
-
-                            docker run -d \
-                                --name app1-container \
-                                -p 8081:80 \
-                                app1:latest
-                        '''
-                    }
-                }
-
-                stage('Run App2') {
-                    steps {
-                        sh '''
-                            docker rm -f app2-container || true
-
-                            docker run -d \
-                                --name app2-container \
-                                -p 8082:80 \
-                                app2:latest
-                        '''
-                    }
-                }
-
-                stage('Run App3') {
-                    steps {
-                        sh '''
-                            docker rm -f app3-container || true
-
-                            docker run -d \
-                                --name app3-container \
-                                -p 8083:80 \
-                                app3:latest
-                        '''
-                    }
-                }
+        stage('Build Movie Image') {
+            steps {
+                sh '''
+                    docker build -t ${IMAGE_NAME}:latest .
+                '''
             }
+        }
+
+        stage('Build Doctor Image') {
+            steps {
+                sh '''
+                    docker build --no-cache -t ${IMAGE_NAME1}:V1 .
+                '''
+            }
+        }
+
+        stage('Stop Old Containers') {
+            steps {
+                sh '''
+                    docker rm -f ${CONTAINER_NAME} || true
+                    docker rm -f ${CONTAINER_NAME2} || true
+                '''
+            }
+        }
+
+        stage('Run Movie Container') {
+            steps {
+                sh '''
+                    docker run -d \
+                        --name ${CONTAINER_NAME} \
+                        -p ${HOST_PORT}:${CONTAINER_PORT} \
+                        ${IMAGE_NAME}:latest
+                '''
+            }
+        }
+
+        stage('Run Doctor Container') {
+            steps {
+                sh '''
+                    docker run -d \
+                        --name ${CONTAINER_NAME2} \
+                        -p ${HOST_PORT1}:${CONTAINER_PORT} \
+                        ${IMAGE_NAME1}:latest
+                '''
+            }
+        }
+
+        stage('Check Containers') {
+            steps {
+                sh '''
+                    echo "===== Running Containers ====="
+                    docker ps
+
+                    echo "===== Movie Container Logs ====="
+                    docker logs --tail 50 ${CONTAINER_NAME} || true
+
+                    echo "===== Doctor Container Logs ====="
+                    docker logs --tail 50 ${CONTAINER_NAME2} || true
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Docker applications deployed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
