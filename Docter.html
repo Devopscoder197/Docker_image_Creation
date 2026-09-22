@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Appointment Booking</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f0f6ff;
+            color: #333;
+        }
+
+        header {
+            background: #1976d2;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 50px 20px 30px;
+        }
+
+        .hero h2 {
+            color: #1976d2;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #666;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto 50px;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            color: #1976d2;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e3f2fd;
+            padding-bottom: 10px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .doctor-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .doctor-icon {
+            width: 60px;
+            height: 60px;
+            background: #1976d2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+        }
+
+        .doctor-info h3 {
+            margin-bottom: 5px;
+        }
+
+        .doctor-info p {
+            color: #666;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #125ca1;
+        }
+
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            background: #1976d2;
+            color: white;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>HealthCare+</h1>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Doctors</a>
+        <a href="#">Appointments</a>
+        <a href="#">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Book Your Doctor Appointment</h2>
+    <p>Schedule an appointment with our experienced doctors.</p>
+</section>
+
+<div class="container">
+
+    <h2 class="section-title">Select Doctor</h2>
+
+    <div class="doctor-card">
+        <div class="doctor-icon">👨‍⚕️</div>
+
+        <div class="doctor-info">
+            <h3>Dr. John Smith</h3>
+            <p>Cardiologist • 10+ Years Experience</p>
+        </div>
+    </div>
+
+    <form id="appointmentForm">
+
+        <h2 class="section-title">Appointment Details</h2>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label for="doctor">Doctor</label>
+
+                <select id="doctor" required>
+                    <option value="">Select Doctor</option>
+                    <option value="Dr. John Smith">
+                        Dr. John Smith - Cardiologist
+                    </option>
+                    <option value="Dr. Sarah Williams">
+                        Dr. Sarah Williams - Dermatologist
+                    </option>
+                    <option value="Dr. Michael Brown">
+                        Dr. Michael Brown - General Physician
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Appointment Date</label>
+                <input type="date" id="date" required>
+            </div>
+
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label for="time">Appointment Time</label>
+
+                <select id="time" required>
+                    <option value="">Select Time</option>
+                    <option>09:00 AM</option>
+                    <option>10:00 AM</option>
+                    <option>11:00 AM</option>
+                    <option>02:00 PM</option>
+                    <option>03:00 PM</option>
+                    <option>04:00 PM</option>
+                    <option>05:00 PM</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="type">Appointment Type</label>
+
+                <select id="type" required>
+                    <option value="">Select Type</option>
+                    <option>In-Person Visit</option>
+                    <option>Video Consultation</option>
+                </select>
+            </div>
+
+        </div>
+
+        <h2 class="section-title">Patient Information</h2>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your full name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter phone number"
+                    required
+                >
+            </div>
+
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter email address"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input
+                    type="number"
+                    id="age"
+                    placeholder="Enter age"
+                    min="1"
+                    max="120"
+                    required
+                >
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="reason">Reason for Visit</label>
+
+            <textarea
+                id="reason"
+                placeholder="Briefly describe your reason for the appointment..."
+            ></textarea>
+        </div>
+
+        <button type="submit" class="btn">
+            Book Appointment
+        </button>
+
+        <div class="success-message" id="successMessage">
+            ✅ Appointment booked successfully!
+        </div>
+
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2026 HealthCare+ | Doctor Appointment System</p>
+</footer>
+
+<script>
+    const form = document.getElementById("appointmentForm");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        successMessage.style.display = "block";
+
+        form.reset();
+
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
+    });
+</script>
+
+</body>
+</html>
